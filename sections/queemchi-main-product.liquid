@@ -1,0 +1,223 @@
+{% liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign conservation = product.metafields.custom.conservation_message
+  assign spice_level = product.metafields.custom.spice_level
+  assign ingredients = product.metafields.custom.ingredients
+  assign benefits = product.metafields.custom.benefits
+  assign product_form_id = 'QueemchiProductForm-' | append: section.id
+  assign quantity_id = 'QueemchiQuantity-' | append: section.id
+%}
+
+<section
+  class="qm-product"
+  data-qm-product
+  data-money-format="{{ shop.money_format | escape }}"
+>
+  <div class="qm-product__hero">
+    <div class="qm-product__media">
+      {% if current_variant.featured_image %}
+        {% assign featured_image = current_variant.featured_image %}
+      {% else %}
+        {% assign featured_image = product.featured_image %}
+      {% endif %}
+
+      {% if featured_image %}
+        <img
+          data-qm-product-image
+          class="qm-product__image"
+          src="{{ featured_image | image_url: width: 1200 }}"
+          alt="{{ featured_image.alt | default: product.title | escape }}"
+          width="{{ featured_image.width }}"
+          height="{{ featured_image.height }}"
+          loading="eager"
+        >
+      {% else %}
+        <div class="qm-product__image" aria-hidden="true"></div>
+      {% endif %}
+    </div>
+
+    <div class="qm-product__panel">
+      {% if section.settings.eyebrow != blank %}
+        <p class="qm-product__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+
+      <h1 class="qm-product__title">{{ product.title | escape }}</h1>
+
+      <div class="qm-product__price-row">
+        <span class="qm-product__price" data-qm-price aria-live="polite">
+          {{ current_variant.price | money }}
+        </span>
+        <span
+          class="qm-product__compare"
+          data-qm-compare
+          {% unless current_variant.compare_at_price > current_variant.price %}hidden{% endunless %}
+        >
+          {% if current_variant.compare_at_price > current_variant.price %}
+            {{ current_variant.compare_at_price | money }}
+          {% endif %}
+        </span>
+      </div>
+
+      {% if product.description != blank %}
+        <div class="qm-product__description">
+          {{ product.description }}
+        </div>
+      {% endif %}
+
+      {% form 'product', product, id: product_form_id, class: 'qm-product__form product-form' %}
+        {% unless product.has_only_default_variant %}
+          <fieldset class="qm-product__fieldset">
+            <legend class="qm-product__label">{{ section.settings.variant_label | escape }}</legend>
+            <div class="qm-product__variants">
+              {% for variant in product.variants %}
+                {% liquid
+                  assign variant_image = ''
+                  if variant.featured_image
+                    assign variant_image = variant.featured_image | image_url: width: 1200
+                  endif
+                  assign variant_gramaje = variant.metafields.custom.gramaje.value
+                %}
+                <div>
+                  <input
+                    class="qm-product__variant-input"
+                    id="QueemchiVariant-{{ section.id }}-{{ variant.id }}"
+                    type="radio"
+                    name="id"
+                    value="{{ variant.id }}"
+                    data-qm-variant
+                    data-price="{{ variant.price }}"
+                    data-compare="{{ variant.compare_at_price | default: 0 }}"
+                    data-available="{{ variant.available }}"
+                    data-gramaje="{{ variant_gramaje | escape }}"
+                    data-image="{{ variant_image }}"
+                    data-image-alt="{{ variant.featured_image.alt | default: product.title | escape }}"
+                    {% if variant.id == current_variant.id %}checked{% endif %}
+                    {% unless variant.available %}disabled{% endunless %}
+                  >
+                  <label class="qm-product__variant-label" for="QueemchiVariant-{{ section.id }}-{{ variant.id }}">
+                    {{ variant.title | escape }}
+                  </label>
+                </div>
+              {% endfor %}
+            </div>
+          </fieldset>
+        {% else %}
+          <input type="hidden" name="id" value="{{ current_variant.id }}">
+        {% endunless %}
+
+        <div class="qm-product__meta-strip">
+          <div class="qm-product__meta-pill">
+            <span class="qm-product__meta-label">{{ section.settings.weight_label | escape }}</span>
+            <span class="qm-product__meta-value" data-qm-gramaje data-fallback="{{ section.settings.weight_fallback | escape }}">
+              {{ current_variant.metafields.custom.gramaje.value | default: section.settings.weight_fallback }}
+            </span>
+          </div>
+
+          {% if spice_level != blank %}
+            <div class="qm-product__meta-pill">
+              <span class="qm-product__meta-label">{{ section.settings.spice_label | escape }}</span>
+              <span class="qm-product__meta-value">{{ spice_level.value }}</span>
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="qm-product__quantity">
+          <label class="qm-product__label" for="{{ quantity_id }}">{{ section.settings.quantity_label | escape }}</label>
+          <div class="qm-product__qty-control">
+            <button class="qm-product__qty-button" type="button" data-qm-minus aria-label="{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}">&minus;</button>
+            <input
+              id="{{ quantity_id }}"
+              class="qm-product__qty-input"
+              type="number"
+              name="quantity"
+              min="1"
+              value="1"
+              data-qm-quantity
+            >
+            <button class="qm-product__qty-button" type="button" data-qm-plus aria-label="{{ 'products.product.quantity.increase' | t: product: product.title | escape }}">+</button>
+          </div>
+        </div>
+
+        <div class="qm-product__actions">
+          <button
+            class="qm-product__button product-form__submit"
+            type="submit"
+            name="add"
+            data-qm-add
+            data-available-text="{{ section.settings.add_to_cart_label | escape }}"
+            data-sold-out-text="{{ section.settings.sold_out_label | escape }}"
+            {% unless current_variant.available %}disabled{% endunless %}
+          >
+            {% if current_variant.available %}
+              {{ section.settings.add_to_cart_label | escape }}
+            {% else %}
+              {{ section.settings.sold_out_label | escape }}
+            {% endif %}
+          </button>
+
+          {% if section.settings.show_dynamic_checkout %}
+            {{ form | payment_button }}
+          {% endif %}
+        </div>
+      {% endform %}
+    </div>
+  </div>
+
+  <div class="qm-product__details">
+    {% if conservation != blank %}
+      <article class="qm-product__info-card">
+        <h2>{{ section.settings.conservation_label | escape }}</h2>
+        <div>{{ conservation | metafield_tag }}</div>
+      </article>
+    {% endif %}
+
+    {% if ingredients != blank %}
+      <article class="qm-product__info-card">
+        <h2>{{ section.settings.ingredients_label | escape }}</h2>
+        <ul class="qm-product__tags">
+          {% for ingredient in ingredients.value %}
+            <li>{{ ingredient }}</li>
+          {% endfor %}
+        </ul>
+      </article>
+    {% endif %}
+
+    {% if benefits != blank %}
+      <article class="qm-product__info-card">
+        <h2>{{ section.settings.benefits_label | escape }}</h2>
+        <ul class="qm-product__bullets">
+          {% for benefit in benefits.value %}
+            <li>{{ benefit }}</li>
+          {% endfor %}
+        </ul>
+      </article>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Queemchi main product",
+  "tag": "section",
+  "class": "section-queemchi-main-product",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Kimchi vivo" },
+    { "type": "text", "id": "variant_label", "label": "Variant label", "default": "Elige tu tamaño" },
+    { "type": "text", "id": "weight_label", "label": "Weight label", "default": "Contenido" },
+    { "type": "text", "id": "weight_fallback", "label": "Weight fallback", "default": "Selecciona tamaño" },
+    { "type": "text", "id": "spice_label", "label": "Spice label", "default": "Picante" },
+    { "type": "text", "id": "quantity_label", "label": "Quantity label", "default": "Cantidad" },
+    { "type": "text", "id": "add_to_cart_label", "label": "Add to cart label", "default": "Agregar al carrito" },
+    { "type": "text", "id": "sold_out_label", "label": "Sold out label", "default": "Agotado" },
+    { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show dynamic checkout button", "default": true },
+    { "type": "text", "id": "conservation_label", "label": "Conservation label", "default": "Conservación" },
+    { "type": "text", "id": "ingredients_label", "label": "Ingredients label", "default": "Ingredientes" },
+    { "type": "text", "id": "benefits_label", "label": "Benefits label", "default": "Beneficios" }
+  ],
+  "presets": [
+    {
+      "name": "Queemchi main product"
+    }
+  ]
+}
+{% endschema %}
