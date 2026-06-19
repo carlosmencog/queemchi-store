@@ -1,0 +1,13 @@
+{% comment %}
+  Queemchi home assets.
+  Loaded after Dawn's base.css so the Astro/Webflow export keeps its original look.
+{% endcomment %}
+
+{% if request.page_type == 'index' %}
+  {{ 'normalize.css' | asset_url | stylesheet_tag }}
+  {{ 'webflow.css' | asset_url | stylesheet_tag }}
+  {{ 'mvb-c3675c.webflow.css' | asset_url | stylesheet_tag }}
+  <script>
+    !function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);
+  </script>
+{% endif %}

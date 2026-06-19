@@ -1,0 +1,8 @@
+node_modules/
+package-lock.json
+package.json
+tailwind.config.js
+assets/queemchi-tailwind.input.css
+.git/
+.github/
+.vscode/

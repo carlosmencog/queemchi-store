@@ -1,0 +1,114 @@
+<svg width="1060" height="263" viewBox="0 0 1060 263" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>Proceso vivo de Queemchi</title>
+  <desc>Ilustracion animada del proceso: preparar, fermentar y disfrutar.</desc>
+  <defs>
+    <linearGradient id="trackGradient" x1="80" y1="92" x2="980" y2="92" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E03D54"/>
+      <stop offset="0.5" stop-color="#E98080"/>
+      <stop offset="1" stop-color="#F5A79E"/>
+    </linearGradient>
+    <radialGradient id="jarGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(530 90) rotate(90) scale(106 330)">
+      <stop stop-color="#F5A79E" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#E03D54" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softShadow" x="-20%" y="-30%" width="140%" height="160%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#E03D54" flood-opacity="0.18"/>
+    </filter>
+    <style>
+      @font-face {
+        font-family: "Rethink Sans";
+        src: url("../fonts/RethinkSans-ExtraBold.ttf") format("truetype");
+        font-weight: 800;
+      }
+      @font-face {
+        font-family: "Rethink Sans";
+        src: url("../fonts/RethinkSans-SemiBold.ttf") format("truetype");
+        font-weight: 600;
+      }
+      .label { font-family: "Rethink Sans", Arial, sans-serif; font-size: 22px; font-weight: 800; fill: #E03D54; }
+      .mini { font-family: "Rethink Sans", Arial, sans-serif; font-size: 13px; font-weight: 600; fill: #E98080; }
+      .step { transform-box: fill-box; transform-origin: center; animation: breathe 3.6s ease-in-out infinite; }
+      .step:nth-of-type(2) { animation-delay: .3s; }
+      .step:nth-of-type(3) { animation-delay: .6s; }
+      .steam { animation: rise 2.8s ease-in-out infinite; opacity: 0; }
+      .steam.two { animation-delay: .45s; }
+      .steam.three { animation-delay: .9s; }
+      .bubble { animation: bubble 2.9s ease-in-out infinite; }
+      .bubble.two { animation-delay: .6s; }
+      .bubble.three { animation-delay: 1.2s; }
+      .spark { transform-box: fill-box; transform-origin: center; animation: pop 1.8s ease-in-out infinite; }
+      .spark.two { animation-delay: .45s; }
+      .spark.three { animation-delay: .9s; }
+      @keyframes breathe {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.035); }
+      }
+      @keyframes rise {
+        0% { transform: translateY(18px); opacity: 0; }
+        30% { opacity: .85; }
+        100% { transform: translateY(-16px); opacity: 0; }
+      }
+      @keyframes bubble {
+        0%, 100% { transform: translateY(5px); opacity: .35; }
+        50% { transform: translateY(-8px); opacity: 1; }
+      }
+      @keyframes pop {
+        0%, 100% { transform: scale(.65) rotate(0deg); opacity: .35; }
+        50% { transform: scale(1.08) rotate(12deg); opacity: 1; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .step, .steam, .bubble, .spark { animation: none; opacity: 1; }
+      }
+    </style>
+  </defs>
+
+  <rect width="1060" height="263" rx="36" fill="#F5A79E" fill-opacity="0.12"/>
+  <ellipse cx="530" cy="104" rx="390" ry="112" fill="url(#jarGlow)"/>
+
+  <path id="processPath" d="M94 96C228 34 376 42 514 96C652 150 820 158 966 96" stroke="url(#trackGradient)" stroke-width="6" stroke-linecap="round" stroke-dasharray="18 18"/>
+  <path d="M94 96C228 34 376 42 514 96C652 150 820 158 966 96" stroke="#F5A79E" stroke-width="2" stroke-linecap="round" stroke-opacity=".34"/>
+
+  <circle r="9" fill="#E03D54">
+    <animateMotion dur="5.8s" repeatCount="indefinite" rotate="auto">
+      <mpath href="#processPath"/>
+    </animateMotion>
+    <animate attributeName="r" values="7;11;7" dur="1.4s" repeatCount="indefinite"/>
+  </circle>
+
+  <g class="step" filter="url(#softShadow)">
+    <circle cx="128" cy="96" r="70" fill="#F5A79E" fill-opacity=".18" stroke="#E03D54" stroke-width="5"/>
+    <path d="M93 115C102 84 128 64 164 62C158 98 135 121 93 115Z" fill="#E98080"/>
+    <path d="M104 113C112 93 130 77 154 70" stroke="#E03D54" stroke-width="5" stroke-linecap="round"/>
+    <path d="M86 91C107 82 126 86 142 104C119 117 96 112 86 91Z" fill="#F5A79E"/>
+    <path d="M100 93C112 94 122 98 132 106" stroke="#E03D54" stroke-width="4" stroke-linecap="round"/>
+    <circle class="spark" cx="172" cy="58" r="7" fill="#E03D54"/>
+    <circle class="spark two" cx="181" cy="130" r="5" fill="#E98080"/>
+  </g>
+  <text x="128" y="202" text-anchor="middle" class="label">Preparar</text>
+  <text x="128" y="224" text-anchor="middle" class="mini">cortar + sazonar</text>
+
+  <g class="step" filter="url(#softShadow)">
+    <circle cx="530" cy="96" r="70" fill="#F5A79E" fill-opacity=".18" stroke="#E03D54" stroke-width="5"/>
+    <path d="M497 75H563L556 142H504L497 75Z" fill="#F5A79E"/>
+    <path d="M501 93H559L554 139H506L501 93Z" fill="#E98080"/>
+    <path d="M493 67H567V82H493V67Z" fill="#E03D54"/>
+    <path d="M508 106C521 98 537 99 552 111" stroke="#F5A79E" stroke-width="5" stroke-linecap="round"/>
+    <circle class="bubble" cx="519" cy="121" r="5" fill="#F5A79E"/>
+    <circle class="bubble two" cx="536" cy="111" r="4" fill="#E98080"/>
+    <circle class="bubble three" cx="545" cy="129" r="6" fill="#E03D54"/>
+  </g>
+  <text x="530" y="202" text-anchor="middle" class="label">Fermentar</text>
+  <text x="530" y="224" text-anchor="middle" class="mini">tiempo + equilibrio</text>
+
+  <g class="step" filter="url(#softShadow)">
+    <circle cx="932" cy="96" r="70" fill="#F5A79E" fill-opacity=".18" stroke="#E03D54" stroke-width="5"/>
+    <path d="M884 106C895 137 969 137 980 106H884Z" fill="#F5A79E"/>
+    <path d="M895 105C906 91 923 85 942 88C960 91 971 98 978 106C968 120 893 120 884 106C887 105 891 105 895 105Z" fill="#E98080"/>
+    <path d="M912 93C924 105 946 105 958 93" stroke="#E03D54" stroke-width="6" stroke-linecap="round"/>
+    <path class="steam" d="M915 76C902 62 930 55 916 41" stroke="#F5A79E" stroke-width="5" stroke-linecap="round"/>
+    <path class="steam two" d="M940 78C927 64 955 57 941 43" stroke="#E98080" stroke-width="5" stroke-linecap="round"/>
+    <path class="steam three" d="M963 76C950 62 978 55 964 41" stroke="#E03D54" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <text x="932" y="202" text-anchor="middle" class="label">Disfrutar</text>
+  <text x="932" y="224" text-anchor="middle" class="mini">servir + compartir</text>
+</svg>
