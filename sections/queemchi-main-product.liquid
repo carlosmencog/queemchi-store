@@ -4,6 +4,7 @@
   assign spice_level = product.metafields.custom.spice_level
   assign ingredients = product.metafields.custom.ingredients
   assign benefits = product.metafields.custom.benefits
+  assign variant_option_name = product.options_with_values.first.name | default: 'Gramaje'
   assign product_form_id = 'QueemchiProductForm-' | append: section.id
   assign quantity_id = 'QueemchiQuantity-' | append: section.id
 %}
@@ -67,7 +68,9 @@
       {% form 'product', product, id: product_form_id, class: 'qm-product__form product-form' %}
         {% unless product.has_only_default_variant %}
           <fieldset class="qm-product__fieldset">
-            <legend class="qm-product__label">{{ section.settings.variant_label | escape }}</legend>
+            <legend class="qm-product__label">
+              {{ section.settings.variant_label | default: variant_option_name | escape }}
+            </legend>
             <div class="qm-product__variants">
               {% for variant in product.variants %}
                 {% liquid
@@ -75,7 +78,7 @@
                   if variant.featured_image
                     assign variant_image = variant.featured_image | image_url: width: 1200
                   endif
-                  assign variant_gramaje = variant.metafields.custom.gramaje.value
+                  assign variant_gramaje = variant.metafields.custom.gramaje.value | default: variant.title
                 %}
                 <div>
                   <input
@@ -109,7 +112,7 @@
           <div class="qm-product__meta-pill">
             <span class="qm-product__meta-label">{{ section.settings.weight_label | escape }}</span>
             <span class="qm-product__meta-value" data-qm-gramaje data-fallback="{{ section.settings.weight_fallback | escape }}">
-              {{ current_variant.metafields.custom.gramaje.value | default: section.settings.weight_fallback }}
+              {{ current_variant.metafields.custom.gramaje.value | default: current_variant.title | default: section.settings.weight_fallback }}
             </span>
           </div>
 
@@ -202,9 +205,9 @@
   "class": "section-queemchi-main-product",
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Kimchi vivo" },
-    { "type": "text", "id": "variant_label", "label": "Variant label", "default": "Elige tu tamaño" },
+    { "type": "text", "id": "variant_label", "label": "Variant label", "default": "Gramaje" },
     { "type": "text", "id": "weight_label", "label": "Weight label", "default": "Contenido" },
-    { "type": "text", "id": "weight_fallback", "label": "Weight fallback", "default": "Selecciona tamaño" },
+    { "type": "text", "id": "weight_fallback", "label": "Weight fallback", "default": "Selecciona gramaje" },
     { "type": "text", "id": "spice_label", "label": "Spice label", "default": "Picante" },
     { "type": "text", "id": "quantity_label", "label": "Quantity label", "default": "Cantidad" },
     { "type": "text", "id": "add_to_cart_label", "label": "Add to cart label", "default": "Agregar al carrito" },
