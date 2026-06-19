@@ -107,10 +107,12 @@
 .qm-product__title {
   margin: 0;
   color: var(--qm-red);
-  font-size: clamp(44px, 10vw, 96px);
-  line-height: 0.92;
+  font-size: clamp(42px, 5.6vw, 72px);
+  line-height: 0.96;
   font-weight: 800;
   letter-spacing: 0;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 .qm-product__description {
@@ -375,6 +377,7 @@
   .qm-product__panel {
     align-self: center;
     padding: 36px;
+    max-width: 520px;
   }
 
   .qm-product__meta-strip {
@@ -397,5 +400,9 @@
 
   .qm-product__panel {
     padding: 22px;
+  }
+
+  .qm-product__title {
+    font-size: clamp(38px, 13vw, 56px);
   }
 }

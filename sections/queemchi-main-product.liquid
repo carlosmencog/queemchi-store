@@ -5,6 +5,10 @@
   assign ingredients = product.metafields.custom.ingredients
   assign benefits = product.metafields.custom.benefits
   assign variant_option_name = product.options_with_values.first.name | default: 'Gramaje'
+  assign current_gramaje = current_variant.metafields.custom.gramaje.value | default: current_variant.option1 | default: current_variant.title
+  if current_gramaje == 'Default Title'
+    assign current_gramaje = section.settings.weight_fallback
+  endif
   assign product_form_id = 'QueemchiProductForm-' | append: section.id
   assign quantity_id = 'QueemchiQuantity-' | append: section.id
 %}
@@ -66,7 +70,7 @@
       {% endif %}
 
       {% form 'product', product, id: product_form_id, class: 'qm-product__form product-form' %}
-        {% unless product.has_only_default_variant %}
+        {% if product.variants.size > 1 %}
           <fieldset class="qm-product__fieldset">
             <legend class="qm-product__label">
               {{ section.settings.variant_label | default: variant_option_name | escape }}
@@ -78,7 +82,10 @@
                   if variant.featured_image
                     assign variant_image = variant.featured_image | image_url: width: 1200
                   endif
-                  assign variant_gramaje = variant.metafields.custom.gramaje.value | default: variant.title
+                  assign variant_gramaje = variant.metafields.custom.gramaje.value | default: variant.option1 | default: variant.title
+                  if variant_gramaje == 'Default Title'
+                    assign variant_gramaje = section.settings.weight_fallback
+                  endif
                 %}
                 <div>
                   <input
@@ -98,7 +105,7 @@
                     {% unless variant.available %}disabled{% endunless %}
                   >
                   <label class="qm-product__variant-label" for="QueemchiVariant-{{ section.id }}-{{ variant.id }}">
-                    {{ variant.title | escape }}
+                    {{ variant_gramaje | escape }}
                   </label>
                 </div>
               {% endfor %}
@@ -112,7 +119,7 @@
           <div class="qm-product__meta-pill">
             <span class="qm-product__meta-label">{{ section.settings.weight_label | escape }}</span>
             <span class="qm-product__meta-value" data-qm-gramaje data-fallback="{{ section.settings.weight_fallback | escape }}">
-              {{ current_variant.metafields.custom.gramaje.value | default: current_variant.title | default: section.settings.weight_fallback }}
+              {{ current_gramaje }}
             </span>
           </div>
 
