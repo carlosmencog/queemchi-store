@@ -14,6 +14,98 @@
   font-display: swap;
 }
 
+.qm-site-header,
+.qm-site-footer {
+  --qm-red: #e03d54;
+  --qm-coral: #e98080;
+  --qm-blush: #f5a79e;
+  --qm-cream: #fff6f3;
+  --qm-ink: #161616;
+  font-family: RethinkSans, var(--font-body-family), sans-serif;
+}
+
+.qm-site-header {
+  background: var(--qm-red);
+  padding: 36px 16px;
+}
+
+.qm-site-header__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px 22px;
+  width: min(920px, 100%);
+  margin: 0 auto;
+}
+
+.qm-site-header__item {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(245, 167, 158, 0.24);
+  color: #fff;
+  padding: 0 22px;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+  transition: background 180ms ease, transform 180ms ease, border-color 180ms ease;
+}
+
+.qm-site-header__item:hover,
+.qm-site-header__item:focus-visible {
+  border-color: rgba(255, 255, 255, 0.45);
+  background: rgba(245, 167, 158, 0.42);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.qm-site-footer {
+  background: #fff;
+  color: var(--qm-ink);
+  border-top: 1px solid rgba(224, 61, 84, 0.12);
+}
+
+.qm-site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 38px 0;
+}
+
+.qm-site-footer__brand {
+  color: var(--qm-red);
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.qm-site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 22px;
+}
+
+.qm-site-footer__links a {
+  color: rgba(22, 22, 22, 0.68);
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.qm-site-footer__links a:hover,
+.qm-site-footer__links a:focus-visible {
+  color: var(--qm-red);
+}
+
 .qm-product {
   --qm-red: #e03d54;
   --qm-coral: #e98080;
@@ -390,6 +482,25 @@
 }
 
 @media (max-width: 749px) {
+  .qm-site-header {
+    padding: 22px 12px;
+  }
+
+  .qm-site-header__nav {
+    gap: 10px;
+  }
+
+  .qm-site-header__item {
+    min-height: 36px;
+    padding: 0 14px;
+    font-size: 13px;
+  }
+
+  .qm-site-footer__inner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
   .qm-product__variants {
     grid-template-columns: 1fr;
   }

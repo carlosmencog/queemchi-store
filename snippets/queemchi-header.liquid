@@ -1,0 +1,16 @@
+{% liquid
+  assign product_link = routes.all_products_collection_url
+  if product
+    assign product_link = product.url
+  endif
+%}
+
+<header class="qm-site-header" role="banner">
+  <nav class="qm-site-header__nav" aria-label="Queemchi">
+    <a class="qm-site-header__item" href="{{ routes.root_url }}#benefits">Beneficios</a>
+    <a class="qm-site-header__item" href="{{ product_link }}">Nuestro Producto</a>
+    <a class="qm-site-header__item" href="{{ routes.root_url }}#pricing">Presentaciones</a>
+    <a class="qm-site-header__item" href="{{ routes.root_url }}#faq">Preguntas Frecuentes</a>
+    <a class="qm-site-header__item" href="#MainContent">Haz tu Pedido</a>
+  </nav>
+</header>

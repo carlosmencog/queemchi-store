@@ -314,17 +314,21 @@
       {%- render 'cart-drawer' -%}
     {%- endif -%}
 
-    {% unless request.page_type == 'index' %}
+    {% if request.page_type == 'product' %}
+      {% render 'queemchi-header' %}
+    {% elsif request.page_type != 'index' %}
       {% sections 'header-group' %}
-    {% endunless %}
+    {% endif %}
 
     <main id="MainContent" class="{% unless request.page_type == 'index' %}content-for-layout {% endunless %}focus-none" role="main" tabindex="-1">
       {{ content_for_layout }}
     </main>
 
-    {% unless request.page_type == 'index' %}
+    {% if request.page_type == 'product' %}
+      {% render 'queemchi-footer' %}
+    {% elsif request.page_type != 'index' %}
       {% sections 'footer-group' %}
-    {% endunless %}
+    {% endif %}
 
     <ul hidden>
       <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
