@@ -1,0 +1,47 @@
+{% comment %}
+  Reusable Queemchi CTA.
+
+  Parameters:
+  - label: visible button text
+  - href: renders an anchor when present
+  - target/rel: optional anchor attributes
+  - tone: light or brand
+  - full_width: expands to its container
+  - type/name/disabled: button attributes
+  - product_form: adds the product form hooks used by queemchi-product.js
+  - available_text/sold_out_text: variant state labels for the product form
+{% endcomment %}
+
+{% liquid
+  assign cta_tone = tone | default: 'brand'
+  assign cta_label = label | default: 'Continuar'
+  assign cta_class = 'qm-cta qm-cta--' | append: cta_tone
+  if full_width
+    assign cta_class = cta_class | append: ' qm-cta--full'
+  endif
+%}
+
+{% if href != blank %}
+  <a
+    class="{{ cta_class }}"
+    href="{{ href }}"
+    {% if target != blank %}target="{{ target | escape }}"{% endif %}
+    {% if rel != blank %}rel="{{ rel | escape }}"{% endif %}
+  >
+    <span>{{ cta_label | escape }}</span>
+  </a>
+{% else %}
+  <button
+    class="{{ cta_class }}{% if product_form %} product-form__submit{% endif %}"
+    type="{{ type | default: 'button' }}"
+    {% if name != blank %}name="{{ name | escape }}"{% endif %}
+    {% if product_form %}
+      data-qm-add
+      data-available-text="{{ available_text | escape }}"
+      data-sold-out-text="{{ sold_out_text | escape }}"
+    {% endif %}
+    {% if disabled %}disabled{% endif %}
+  >
+    <span>{{ cta_label | escape }}</span>
+  </button>
+{% endif %}

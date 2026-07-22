@@ -1,0 +1,35 @@
+{% comment %}
+  Queemchi home navigation.
+
+  Keeps Webflow classes/data attributes intact for styling and interactions while
+  giving the section a namespaced qm-* hook for future maintenance.
+{% endcomment %}
+
+<nav class="wrappernav qm-home-nav" data-qm-home-nav>
+  <div data-animation="default" class="navbar w-nav" data-easing2="ease" data-easing="ease" data-collapse="medium" role="banner" data-no-scroll="1" data-duration="400" data-doc-height="1">
+    <div class="w-layout-grid navgrid">
+      <nav role="navigation" id="w-node-c5446576-037a-3c55-f8c6-24ef5dad1fda-5dad1fd4" class="nav-menu w-nav-menu">
+        <div class="inner-nav-wrapper">
+          <a href="#benefits" class="menu-item w-inline-block">
+            <div>Beneficios</div>
+          </a>
+          <a href="#pricing" class="menu-item w-inline-block">
+            <div>Presentaciones</div>
+          </a>
+          <a href="#faq" class="menu-item w-inline-block">
+            <div>Preguntas Frecuentes</div>
+          </a>
+          <a href="{{ order_url }}" class="menu-item qm-home-nav__order w-inline-block" target="_blank" rel="noopener noreferrer">
+            <div>Haz tu Pedido</div>
+          </a>
+        </div>
+      </nav>
+      <div id="w-node-c5446576-037a-3c55-f8c6-24ef5dad203f-5dad1fd4" class="menu-button w-nav-button">
+        <div class="menu-mobile">
+          <div class="sticky-nav"></div>
+          <div class="sticky-nav"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

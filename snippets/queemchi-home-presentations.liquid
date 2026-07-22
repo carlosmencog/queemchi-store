@@ -1,0 +1,62 @@
+{% comment %}
+  Queemchi home presentations/pricing cards.
+{% endcomment %}
+
+<section id="pricing" class="section gap-l qm-home-section qm-home-presentations" data-qm-snap-section>
+  <div class="container gap-m">
+    <div class="center-wrapper">
+      <div class="tag-wrapper">
+        <div class="bullet-icon-purple"></div>
+        <div>Presentaciones</div>
+      </div>
+      <h2 class="heading-large ch">Kimchi para probar, repetir y compartir.<br/></h2>
+      <p class="paragraph-small qm-home-presentations__description">
+        Del clásico al antojo diario. Queemchi es una base flexible para comer mejor, cocinar más rico y descubrir nuevos sabores.
+      </p>
+    </div>
+    <div class="w-layout-grid main-grid plan">
+      <div id="w-node-c6213742-cde9-df4e-4d64-692014e45ab4-4901b859" class="box-wrapper gap-s">
+        <div class="pricing-top">
+          <div>
+            <h3 class="heading-medium">Personal</h3>
+          </div>
+          <div class="list-wrapper">
+            <div class="list-flex">
+              <div class="circle-check"><img src="{{ 'icon-check.svg' | asset_url }}" loading="lazy" alt="" class="icon-check"/></div>
+              <div>Para quienes quieren empezar o sumar kimchi a pocas comidas por semana.</div>
+            </div>
+          </div>
+        </div>
+        {% render 'queemchi-cta', label: 'Quiero el mío', href: order_url, tone: 'light', target: '_blank', rel: 'noopener noreferrer' %}
+      </div>
+      <div id="w-node-c6213742-cde9-df4e-4d64-692014e45ad5-4901b859" class="box-wrapper gap-s">
+        <div class="pricing-top">
+          <div>
+            <h3 class="heading-medium">Familiar</h3>
+          </div>
+          <div class="list-wrapper">
+            <div class="list-flex">
+              <div class="circle-check"><img src="{{ 'icon-check.svg' | asset_url }}" loading="lazy" alt="" class="icon-check"/></div>
+              <div>Para compartir con todos y usarlo como acompañante diario.</div>
+            </div>
+          </div>
+        </div>
+        {% render 'queemchi-cta', label: 'Quiero el mío', href: order_url, tone: 'light', target: '_blank', rel: 'noopener noreferrer' %}
+      </div>
+      <div id="w-node-c6213742-cde9-df4e-4d64-692014e45af6-4901b859" class="box-wrapper gap-s">
+        <div class="pricing-top">
+          <div>
+            <h3 class="heading-medium">Jumbo</h3>
+          </div>
+          <div class="list-wrapper">
+            <div class="list-flex">
+              <div class="circle-check"><img src="{{ 'icon-check.svg' | asset_url }}" loading="lazy" alt="" class="icon-check"/></div>
+              <div>Para tener siempre en la nevera.</div>
+            </div>
+          </div>
+        </div>
+        {% render 'queemchi-cta', label: 'Quiero el mío', href: order_url, tone: 'light', target: '_blank', rel: 'noopener noreferrer' %}
+      </div>
+    </div>
+  </div>
+</section>

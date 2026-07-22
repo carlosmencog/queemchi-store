@@ -324,9 +324,9 @@
       {{ content_for_layout }}
     </main>
 
-    {% if request.page_type == 'product' %}
+    {% if request.page_type == 'product' or request.page_type == 'index' %}
       {% render 'queemchi-footer' %}
-    {% elsif request.page_type != 'index' %}
+    {% else %}
       {% sections 'footer-group' %}
     {% endif %}
 

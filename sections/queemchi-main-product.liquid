@@ -11,6 +11,10 @@
   endif
   assign product_form_id = 'QueemchiProductForm-' | append: section.id
   assign quantity_id = 'QueemchiQuantity-' | append: section.id
+  assign add_button_disabled = false
+  unless current_variant.available
+    assign add_button_disabled = true
+  endunless
 %}
 
 <section
@@ -113,7 +117,7 @@
           </fieldset>
         {% else %}
           <input type="hidden" name="id" value="{{ current_variant.id }}">
-        {% endunless %}
+        {% endif %}
 
         <div class="qm-product__meta-strip">
           <div class="qm-product__meta-pill">
@@ -149,21 +153,22 @@
         </div>
 
         <div class="qm-product__actions">
-          <button
-            class="qm-product__button product-form__submit"
-            type="submit"
-            name="add"
-            data-qm-add
-            data-available-text="{{ section.settings.add_to_cart_label | escape }}"
-            data-sold-out-text="{{ section.settings.sold_out_label | escape }}"
-            {% unless current_variant.available %}disabled{% endunless %}
-          >
-            {% if current_variant.available %}
-              {{ section.settings.add_to_cart_label | escape }}
-            {% else %}
-              {{ section.settings.sold_out_label | escape }}
-            {% endif %}
-          </button>
+          {% if current_variant.available %}
+            {% assign add_button_label = section.settings.add_to_cart_label %}
+          {% else %}
+            {% assign add_button_label = section.settings.sold_out_label %}
+          {% endif %}
+          {% render 'queemchi-cta',
+            label: add_button_label,
+            tone: 'brand',
+            full_width: true,
+            type: 'submit',
+            name: 'add',
+            disabled: add_button_disabled,
+            product_form: true,
+            available_text: section.settings.add_to_cart_label,
+            sold_out_text: section.settings.sold_out_label
+          %}
 
           {% if section.settings.show_dynamic_checkout %}
             {{ form | payment_button }}
